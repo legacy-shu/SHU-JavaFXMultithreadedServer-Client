@@ -21,6 +21,7 @@ public class Server {
     public void listen() {
         while (true){
             try {
+                System.out.println("Listen...");
                 Socket socket = serverSocket.accept();
                 clients.add(new Responder(socket));
             } catch (IOException e) {
@@ -34,8 +35,10 @@ public class Server {
             if(path.exists()){
                 JSONParser jsonParser = new JSONParser();
                 try (FileReader reader = new FileReader(path)) {
-                    Object obj = jsonParser.parse(reader);
-                    savedposts = (JSONArray) obj;
+                    synchronized (savedposts){
+                        Object obj = jsonParser.parse(reader);
+                        savedposts = (JSONArray) obj;
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
@@ -48,8 +51,10 @@ public class Server {
         new Thread(() -> {
             File path = new File("savedposts.json");
             try (FileWriter file = new FileWriter(path)) {
-                file.write(savedposts.toJSONString());
-                file.flush();
+                synchronized(savedposts){
+                    file.write(savedposts.toJSONString());
+                    file.flush();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

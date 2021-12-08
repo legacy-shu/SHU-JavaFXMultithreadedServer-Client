@@ -6,10 +6,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -24,12 +22,12 @@ import shu.nsd.utils.Util;
 import shu.nsd.views.PostView;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.Socket;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class ViewController extends Application {
+public class Main extends Application {
     private final ObservableList<Post> posts = FXCollections.observableArrayList();
     private final ArrayList<Post> allPosts = new ArrayList<>();
     private RequestHandler socketManager;
@@ -103,18 +101,29 @@ public class ViewController extends Application {
         profileEditButton.setOnAction(actionEvent -> {
             selectedFile = fileChooser.showOpenDialog(stage);
             if(selectedFile != null){
-                profileImages64String = Util.imageToBase64(selectedFile.getPath());
-                profileImageView = getIamgeView(selectedFile.getPath(),90);
-                makeRoundIamgeView(profileImageView);
-                profileEditButton.setGraphic(profileImageView);
+                System.out.println(selectedFile.getPath());
+                try {
+                    String imageFile = selectedFile.toURI().toURL().toString();
+                    profileImages64String = Util.imageToBase64(selectedFile.getPath());
+                    profileImageView = getIamgeView(imageFile,90);
+                    makeRoundIamgeView(profileImageView);
+                    profileEditButton.setGraphic(profileImageView);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         selectImageButton.setOnAction(actionEvent -> {
             selectedFile = fileChooser.showOpenDialog(stage);
             if(selectedFile != null){
-                postImages64String = Util.imageToBase64(selectedFile.getPath());
-                postingImage = getIamgeView(selectedFile.getPath(),20);
+                try {
+                    String imageFile = selectedFile.toURI().toURL().toString();
+                    postImages64String = Util.imageToBase64(selectedFile.getPath());
+                    postingImage = getIamgeView(imageFile,20);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }else{
                 postingImage = getIamgeView(url("add.png"),20);
             }
