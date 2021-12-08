@@ -6,8 +6,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -23,6 +25,7 @@ import shu.nsd.views.PostView;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -113,7 +116,7 @@ public class ViewController extends Application {
                 postImages64String = Util.imageToBase64(selectedFile.getPath());
                 postingImage = getIamgeView(selectedFile.getPath(),20);
             }else{
-                postingImage = getIamgeView("src/resources/add.png",20);
+                postingImage = getIamgeView(url("add.png"),20);
             }
             selectImageButton.setGraphic(postingImage);
         });
@@ -175,7 +178,7 @@ public class ViewController extends Application {
     }
 
     private void setDefaultImage(){
-        profileImages64String = Util.imageToBase64("src/resources/user.png");
+        profileImages64String = Util.imageToBase64(url("user.png"));
     }
     private void setUI(Stage stage){
         HBox layout = new HBox(setLeftView(stage), setRightView(stage));
@@ -189,6 +192,7 @@ public class ViewController extends Application {
         stage.show();
     }
     private VBox setLeftView(Stage stage){
+
 
         Label aTtitle = new Label("Your subscribe channel list");
         aTtitle.setTextFill(Color.color(1,1,1));
@@ -206,7 +210,7 @@ public class ViewController extends Application {
         Label userNameLabel = new Label(userNameString);
         userNameLabel.setTextFill(Color.color(1,1,1));
 
-        profileImageView = getIamgeView("src/resources/user.png",90);
+        profileImageView = getIamgeView(url("user.png"),90);
         makeRoundIamgeView(profileImageView);
 
         profileEditButton = new Button("Edit",profileImageView);
@@ -227,15 +231,15 @@ public class ViewController extends Application {
         messageArea.setPrefHeight(80);
         VBox messagePane = new VBox(message, messageArea);
 
-        postingImage = getIamgeView("src/resources/add.png",20);
+        postingImage = getIamgeView(url("add.png"),20);
         selectImageButton = new Button("Add Image",postingImage);
         selectImageButton.setStyle("-fx-content-display: left;");
 
-        ImageView postingImage =  getIamgeView("src/resources/post.png",20);
+        ImageView postingImage =  getIamgeView(url("post.png"),20);
         postButton = new Button("Post",postingImage);
         postButton.setStyle("-fx-content-display: left;");
 
-        ImageView onOffIamgeView = getIamgeView("src/resources/switch.png",20);
+        ImageView onOffIamgeView = getIamgeView(url("switch.png"),20);
         onButton = new Button("On",onOffIamgeView);
         onButton.setStyle("-fx-content-display: left;");
 
@@ -279,7 +283,7 @@ public class ViewController extends Application {
         loginDialog.setTitle("[127.0.0.1 : 12345]");
         loginDialog.setHeaderText("Welcome Hallam Posting Board");
         loginDialog.setContentText("Please enter your name");
-        loginDialog.setGraphic(new ImageView(this.getClass().getResource("/resources/logo.png").toString()));
+        loginDialog.setGraphic(new ImageView(url("logo.png")));
         loginDialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
 
         Label channelTitle = new Label("Please check a channel you want to login");
@@ -317,7 +321,7 @@ public class ViewController extends Application {
         });
     }
     private ImageView getIamgeView(String path, int size){
-        ImageView imageView = new ImageView(Util.getImage(path));
+        ImageView imageView = new ImageView(path);
         imageView.setFitWidth(size);
         imageView.setFitHeight(size);
         return imageView;
@@ -361,6 +365,10 @@ public class ViewController extends Application {
             }
             listView.refresh();
         });
+    }
+
+    private String url(String filename){
+        return getClass().getResource("/resources/"+filename).toString();
     }
 
     public static void main(String[] args){

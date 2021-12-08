@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SHUNoticeBoardClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SHUNoticeBoardClient_jar</output-path>
+    <root id="archive" name="SHUNoticeBoardClient.jar">
+      <element id="module-output" name="SHUNoticeBoardClient" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/javafx-sdk-18/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/Library/Java/JavaVirtualMachines/json-simple-1.1.1(6).jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
