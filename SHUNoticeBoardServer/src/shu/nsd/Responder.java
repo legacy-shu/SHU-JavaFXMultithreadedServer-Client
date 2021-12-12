@@ -28,17 +28,16 @@ public class Responder {
                     if(bytesRead < 99999){
                         JSONParser parser = new JSONParser();
                         try{
-                            System.out.println(data.toString());
                             JSONObject json = (JSONObject) parser.parse(data.toString());
                             data.delete(0, data.length());
-
+                            System.out.println(json);
                             String request = (String) json.get("request");
 
                             if(request.equals("post")){
-                                synchronized (Responder.class){
+                                synchronized (Server.savedposts){
                                     Server.savedposts.add(response(json));
+                                    Server.save();
                                 }
-                                Server.save();
                                 JSONObject jsonObject = new JSONObject();
                                 jsonObject.put("response", "posted");
                                 for(Responder client: Server.clients){
@@ -50,7 +49,9 @@ public class Responder {
                                 JSONObject jsonObject = new JSONObject();
                                 jsonObject.put("response", "loaded");
                                 for(Responder client: Server.clients){
-                                    client.send(response(jsonObject,Server.savedposts));
+                                    synchronized (Server.savedposts){
+                                        client.send(response(jsonObject,Server.savedposts));
+                                    }
                                 }
                             }
 

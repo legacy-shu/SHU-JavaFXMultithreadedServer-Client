@@ -7,15 +7,16 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Server {
 
     private final ServerSocket serverSocket;
-    public static ArrayList<Responder> clients;
+    public static Vector<Responder> clients;
     public static JSONArray savedposts = new JSONArray();
 
     public Server(ServerSocket serverSocket){
-        clients = new ArrayList<>();
+        clients = new Vector<>();
         this.serverSocket = serverSocket;
     }
     public void listen() {
@@ -35,10 +36,8 @@ public class Server {
             if(path.exists()){
                 JSONParser jsonParser = new JSONParser();
                 try (FileReader reader = new FileReader(path)) {
-                    synchronized (savedposts){
-                        Object obj = jsonParser.parse(reader);
-                        savedposts = (JSONArray) obj;
-                    }
+                    Object obj = jsonParser.parse(reader);
+                    savedposts = (JSONArray) obj;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
@@ -51,10 +50,8 @@ public class Server {
         new Thread(() -> {
             File path = new File("savedposts.json");
             try (FileWriter file = new FileWriter(path)) {
-                synchronized(savedposts){
-                    file.write(savedposts.toJSONString());
-                    file.flush();
-                }
+                file.write(savedposts.toJSONString());
+                file.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }

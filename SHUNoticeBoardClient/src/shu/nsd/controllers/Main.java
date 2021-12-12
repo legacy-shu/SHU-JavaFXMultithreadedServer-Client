@@ -101,7 +101,6 @@ public class Main extends Application {
         profileEditButton.setOnAction(actionEvent -> {
             selectedFile = fileChooser.showOpenDialog(stage);
             if(selectedFile != null){
-                System.out.println(selectedFile.getPath());
                 try {
                     String imageFile = selectedFile.toURI().toURL().toString();
                     profileImages64String = Util.imageToBase64(selectedFile.getPath());
@@ -126,6 +125,7 @@ public class Main extends Application {
                 }
             }else{
                 postingImage = getIamgeView(url("add.png"),20);
+                postImages64String = null;
             }
             selectImageButton.setGraphic(postingImage);
         });
@@ -155,7 +155,6 @@ public class Main extends Application {
             String timeStamp = new SimpleDateFormat("yyyy-MM-dd.HH:mm:ss").format(new Date());
             post.setPostedDate(timeStamp);
             post.setChannelPosted(loggedChannel);
-            System.out.println(post);
             socketManager.request(post, "post");
         });
 
@@ -187,7 +186,7 @@ public class Main extends Application {
     }
 
     private void setDefaultImage(){
-        profileImages64String = Util.imageToBase64(url("user.png"));
+        profileImages64String = Util.imageToBase64("src/resources/user.png");
     }
     private void setUI(Stage stage){
         HBox layout = new HBox(setLeftView(stage), setRightView(stage));
