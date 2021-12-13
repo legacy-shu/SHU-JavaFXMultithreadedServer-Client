@@ -66,9 +66,9 @@ RUNNING THE CLIENT
 
 BUILD AND COMPILE WITH IDE
 	
- 	-Open Intellij
+ 	- Open Intellij
 	
-	-Select the folder SHUNoticeBoardClient to open Client program or SHUNoticeBoardServer to open Server program
+	- Select the folder SHUNoticeBoardClient to open Client program or SHUNoticeBoardServer to open Server program
 
 	- File/ Project Structure 
 
